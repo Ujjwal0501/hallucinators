@@ -19,3 +19,23 @@ input[type = submit]{
     border-radius: 50%,50%;
     margin: 0 auto;
 }
+
+#toll_index{
+    width:36%;
+    margin:0 auto;
+}
+
+#toll_1{
+    width:100%;
+    font-size: 20px;
+    margin: 0 auto;
+}
+
+#toll_12{
+    width:100px;
+    margin: 0 auto;
+}
+#toll_login{
+    width:500px;
+    margin: 0 auto;
+}
