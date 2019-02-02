@@ -10,10 +10,10 @@ var connection = mysql.createConnection({
   database: 'hallucinators'
 })
 
-connection.connect(function(err) {
-  if (err) throw err
-  console.log('You are now connected...')
-})
+// connection.connect(function(err) {
+//   if (err) throw err
+//   console.log('You are now connected...')
+// })
 
  var app = express();
  app.set('view engine','hbs');
@@ -24,10 +24,30 @@ connection.connect(function(err) {
 
  app.post('/check',(req,res) => {
      LNO=req.body.LNO;
-     console.log(LNO);
-     res.render('index.hbs',{
-         amount:1000
-     })
+     // console.log(LNO);
+     try {
+         connection.connect((err) => {
+             if (!err) {
+                 console.log("done!")
+                 connection.query('select * from vehicles where license like \''+LNO+'\';', (err, rows, fields) => {
+                     connection.end
+                     if (!err) {
+                         if (rows.length && rows[0].due_amount != null) {
+                             console.log("found"+rows[0].due_amount)
+                             res.render('index.hbs', {amount: rows[0].due_amount})
+                         } else res.render('index.hbs', {amount: 'License Number Does Not Exist in Record!!'})
+                     } else throw Error(e)
+                 })
+             } else
+             throw Error(err)
+         })
+     } catch (e) {
+         console.log(e)
+         res.sendFile('Internal Server Error!')
+     }
+     // res.render('index.hbs',{
+     //     amount:1000
+     // })
  })
 
  app.listen(3000,(err,res) => {
