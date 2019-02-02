@@ -1,11 +1,21 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 var express = require('express');
 var hbs = require('hbs');
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var bcryptjs = require('bcryptjs');
 
-mongoose.connect("mongodb://localhost:27017/dotslash';")
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'hallucinators',
+  password: 'hallucinators',
+  database: 'hallucinators'
+})
+
+// connection.connect(function(err) {
+//   if (err) throw err
+//   console.log('You are now connected...')
+// })
 
  var app = express();
  app.set('view engine','hbs');
@@ -17,9 +27,27 @@ mongoose.connect("mongodb://localhost:27017/dotslash';")
  app.post('/check',(req,res) => {
      LNO=req.body.LNO;
      console.log(LNO);
-     res.render('index.hbs',{
-         amount:1000
-     })
+     // console.log(LNO);
+     try {
+        connection.connect((err) => {
+            if (!err) {
+                console.log("done!")
+                connection.query('select * from vehicles where license like \''+LNO+'\';', (err, rows, fields) => {
+                    connection.end
+                    if (!err) {
+                        if (rows.length && rows[0].due_amount != null) {
+                            console.log("found"+rows[0].due_amount)
+                            res.render('index.hbs', {amount: rows[0].due_amount})
+                        } else res.render('index.hbs', {amount: 'License Number Does Not Exist in Record!!'})
+                    } else throw Error(e)
+                })
+            } else
+            throw Error(err)
+        })
+    } catch (e) {
+        console.log(e)
+        res.sendFile('Internal Server Error!')
+    }
  });
 
 app.get('/tolllogin',(req,res) => {
