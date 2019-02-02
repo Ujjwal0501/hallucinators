@@ -1,0 +1,26 @@
+{
+  "name": "hallucinators",
+  "version": "1.0.0",
+  "description": "A project for HackDotSlash2.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ujjwal0501/hallucinators.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ujjwal0501/hallucinators/issues"
+  },
+  "homepage": "https://github.com/Ujjwal0501/hallucinators#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "hbs": "^4.0.1",
+    "mongoose": "^5.4.9"
+  }
+}
