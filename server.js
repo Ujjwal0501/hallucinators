@@ -12,10 +12,6 @@ var connection = mysql.createConnection({
   database: 'hallucinators'
 })
 
-// connection.connect(function(err) {
-//   if (err) throw err
-//   console.log('You are now connected...')
-// })
 
  var app = express();
  app.set('view engine','hbs');
