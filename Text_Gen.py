@@ -74,11 +74,11 @@ while True:
 
     if k%256 == 27:
         # ESC pressed
-        print("Escape hit, closing...")
+        # print("Escape hit, closing...")
         break
     elif k%256 == 32:
         # SPACE pressed
-        print("Analyzing the frame")
+        # print("Analyzing the frame")
         im = Image.fromarray(frame)
         imgByteArr = BytesIO()
         im.save(imgByteArr, format='PNG')
@@ -87,10 +87,12 @@ while True:
         #print("You're seeing: ", end='')
         #print(caption)
         ocr = OCRImg(imgByteArr)
-        print("Texts around you are: ", end='')
-        txt_data = print(" ".join(ocr))
-        print(ocr)
+        # print("Texts around you are: ", end='')
+        print(" ".join(ocr))
+        # print(ocr)
         time.sleep(5)
+        break
+        
         #img_counter += 1
 
 cam.release()
@@ -99,7 +101,3 @@ cv2.destroyAllWindows()
 
 
 # In[ ]:
-
-
-
-
