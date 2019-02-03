@@ -35,12 +35,16 @@ const { exec } = require('child_process');
 //     console.log('finished');
 // });
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'hallucinators',
-    password: 'hallucinators',
-    database: 'hallucinators'
-})
+function connect() {
+    var connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'hallucinators',
+        password: 'hallucinators',
+        database: 'hallucinators'
+    })
+    connection.connect
+    return connection
+}
 
 // connection.connect(function(err) {
 //   if (err) throw err
@@ -61,24 +65,20 @@ app.post('/check', (req, res) => {
     console.log(LNO);
     // console.log(LNO);
     try {
-        connection.connect((err) => {
+        var connection = connect()
+        console.log("done!")
+        connection.query('select * from vehicles where license like \'' + LNO + '\';', (err, rows, fields) => {
+            connection.end
             if (!err) {
-                console.log("done!")
-                connection.query('select * from vehicles where license like \'' + LNO + '\';', (err, rows, fields) => {
-                    connection.end
-                    if (!err) {
-                        if (rows.length && rows[0].due_amount != null) {
-                            console.log("found" + rows[0].due_amount)
-                            res.render('index.hbs', {
-                                amount: rows[0].due_amount
-                            })
-                        } else res.render('index.hbs', {
-                            amount: 'License Number Does Not Exist in Record!!'
-                        })
-                    } else throw Error(e)
+                if (rows.length && rows[0].due_amount != null) {
+                    console.log("found" + rows[0].due_amount)
+                    res.render('index.hbs', {
+                        amount: rows[0].due_amount
+                    })
+                } else res.render('index.hbs', {
+                    amount: 'License Number Does Not Exist in Record!!'
                 })
-            } else
-                throw Error(err)
+            } else throw Error(e)
         })
     } catch (e) {
         console.log(e)
@@ -129,27 +129,23 @@ app.all('/photo', async (req, res) => {
 //     res.render('toll_login.hbs', {});
 // })
 
-app.get('/toll', (req, res) => {
-    res.render('index.hbs', {
-        number: "GJ-05-1996"
-    });
-});
+// app.get('/toll', (req, res) => {
+//     res.render('index.hbs', {
+//         number: "GJ-05-1996"
+//     });
+// });
 
 app.post('/store',(req,res)=> {
     number = req.body.number,
     fee = req.body.fee
     try {
-        connection.connect((err) => {
+        var connection = connect()
+        console.log("connected!")
+        connection.query('update vehicles set due_amount = due_amount+'+fee+' where license like \'' + number + '\';', (err, rows, fields) => {
+            connection.end
             if (!err) {
-                console.log("connected!")
-                connection.query('update vehicles set due_amount = due_amount+'+fee+' where license like \'' + number + '\';', (err, rows, fields) => {
-                    connection.end
-                    if (!err) {
-                        res.render('result.hbs', null)
-                    } else throw Error(e)
-                })
-            } else
-                throw Error(err)
+                res.render('result.hbs', null)
+            } else throw Error(e)
         })
     } catch (e) {
         console.log(e)
