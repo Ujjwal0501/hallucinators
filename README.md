@@ -16,3 +16,14 @@ Since it is a prototype, it's a bit slow with the process. But with training, th
 * NODE.JS
 * AZURE API FOR OPTICAL CHARACHTER RECOGNISATION
 * MySql
+
+# Installation
+
+* Clone the repository 
+* Change working directory to the newly cloned directory
+* To install nodejs dependencies, run the following command: `npn install`
+* To install required python dependencies, run: `pip install` or `pip3 install`
+* To run the server, type `nodemon` in terminal
+* You can search the website in web browser on localhost:3000
+* For Toll Client interface, use localhost:3000/photo
+* For Toll payment interface, use localhost:3000/
