@@ -39,3 +39,11 @@ input[type = submit]{
     width:500px;
     margin: 0 auto;
 }
+
+#payment_buttons{
+    width:100px;
+}
+
+#paymentE{
+    margin-right: 20px;
+}

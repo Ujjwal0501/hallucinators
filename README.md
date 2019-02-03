@@ -1,4 +1,4 @@
-## E-Toll Fine
+# E-Toll Fine
 
 # Abstract
 In today's fast paced world, every second matters to process any kind of data. One of the issues with the smart city projects is the slow paced tolling system at the tall plaza.
@@ -10,3 +10,9 @@ But the problem with there is that it employs Radio Frequency Identification (RF
 
 Our system provides this service on a total FREE basis. Basically we used an Azure API for for Optical Character Recognition for the toll cameras to capture the Lincense plate Number. This number is then searched in the dataset where the user information is defined for the particular number plate. Once obtained the information, payment gateway is being created which redirects them to the bank payment website.
 Since it is a prototype, it's a bit slow with the process. But with training, the accuracy and the speed can be increased. The user is being provided with a timelimit for the payment. If delayed for the first two times, fine is charged and if further delayed, his/her Lincense Registration will be canceled.
+
+
+# Technical Part
+* NODE.JS
+* AZURE API FOR OPTICAL CHARACHTER RECOGNISATION
+* MySql
