@@ -125,26 +125,36 @@ app.all('/photo', async (req, res) => {
     }
 });
 
-app.get('/tolllogin', (req, res) => {
-    res.render('toll_login.hbs', {});
-})
-
-app.post('/login', (req, res) => {
-    id = req.body.toll_LoginId;
-    password = req.body.password;
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(password, salt, (err, hash) => {
-            password = hash;
-            next();
-        });
-    });
-})
+// app.get('/tolllogin', (req, res) => {
+//     res.render('toll_login.hbs', {});
+// })
 
 app.get('/toll', (req, res) => {
-    res.render('toll_index.hbs', {
-        number: "GJ-05-1996",
-        fee: "120"
+    res.render('index.hbs', {
+        number: "GJ-05-1996"
     });
+});
+
+app.post('/store',(req,res)=> {
+    number = req.body.number,
+    fee = req.body.fee
+    try {
+        connection.connect((err) => {
+            if (!err) {
+                console.log("connected!")
+                connection.query('update vehicles set due_amount = due_amount+'+fee+' where license like \'' + number + '\';', (err, rows, fields) => {
+                    connection.end
+                    if (!err) {
+                        res.render('result.hbs', null)
+                    } else throw Error(e)
+                })
+            } else
+                throw Error(err)
+        })
+    } catch (e) {
+        console.log(e)
+        res.send('Internal Server Error!')
+    }
 })
 
 app.listen(3000, (err, res) => {
