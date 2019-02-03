@@ -91,7 +91,7 @@ app.get('/photo', async (req, res) => {
             // return;
           }
         
-          console.log(`${stdout}`);
+          console.log(`${stdout[3]}`);
           res.render('toll_index.hbs',{
               number: stdout,
               fee:49
@@ -138,8 +138,12 @@ app.post('/store',(req,res)=> {
         connection.query('update vehicles set due_amount = due_amount+'+fee+' where license like \'' + number + '\';', (err, rows, fields) => {
             connection.end
             if (!err) {
-                console.log(rows)
-                res.render('result.hbs', null)
+                if (rows.changedRows) {
+                res.render('result.hbs', {status: "Toll added!\\nYou will be Redirected to HOME PAGE."})
+            } else {
+                res.render('result.hbs', {status: "Invalid License Number"})
+            }
+            console.log(rows)
             } else throw Error(e)
         })
     } catch (e) {
