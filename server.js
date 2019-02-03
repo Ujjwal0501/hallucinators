@@ -82,21 +82,19 @@ app.post('/check', (req, res) => {
     }
 });
 
-app.all('/photo', async (req, res) => {
-    LNO = req.body.LNO;
-    console.log(LNO);
+app.get('/photo', async (req, res) => {
     // console.log(LNO);
     try {
         exec('python3 Text_Gen.py', (err, stdout, stderr) => {
           if (err) {
             console.error(`exec error: ${err}`);
-            return;
+            // return;
           }
         
           console.log(`${stdout}`);
           res.render('toll_index.hbs',{
-              number:stdout,
-              fee:100
+              number: stdout,
+              fee:49
           });
         });
         // new Promise((resolve, reject) => {
@@ -140,6 +138,7 @@ app.post('/store',(req,res)=> {
         connection.query('update vehicles set due_amount = due_amount+'+fee+' where license like \'' + number + '\';', (err, rows, fields) => {
             connection.end
             if (!err) {
+                console.log(rows)
                 res.render('result.hbs', null)
             } else throw Error(e)
         })
