@@ -90,8 +90,26 @@ app.get('/photo', async (req, res) => {
             console.error(`exec error: ${err}`);
             // return;
           }
-        
-          console.log(`${stdout[3]}`);
+          for(var i=0;i<stdout.length;i++)
+          {
+              if(stdout[i]<48||(stdout[i]>=58&&stdout[i]<=64)||stdout[i]>=91)
+              {
+                  stdout[i]=" ";
+              }
+          }
+          for(var i=0;i<stdout.length;i++)
+          {
+              if(stdout[i]=" ")
+              {
+                  var j=i+1;
+                  while(stdout[j]==" ")
+                  {
+                      j++;
+                  }
+                  stdout[i]=stdout[j];
+              }
+          }
+          console.log(`${stdout[0]}`);
           res.render('toll_index.hbs',{
               number: stdout,
               fee:49
