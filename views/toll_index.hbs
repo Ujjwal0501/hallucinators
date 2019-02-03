@@ -11,9 +11,11 @@
 <body>
     <div id="toll_index">
         <h1 style="text-align:center">TOLL CLIENT</h1>
-        <h2 style="text-align:center">License Plate No : <input type="text" value={{number}}></h2>
-        <p style="text-align:center">Toll Fee: {{fee}}</p>
-        <div id="toll_12"><button id="toll_1" style="text-align:center">confirm</button></div>
+        <form method="POST" action="/store">
+        <h2 style="text-align:center">License Plate No : <input type="text" name = "number" value={{number}}></h2>
+        <p style="text-align:center">Toll Fee: <input type="number" name="fee" value={{fee}}></p>
+        <div id="toll_12"><input type="submit"style="text-align:center" value="confirm"></div>
+    </form>
     </div>
 </body>
 </html>
