@@ -118,7 +118,7 @@ function post(account) {
 // post the transaction for logging in server
 function confirmTx() {
     var data = JSON.stringify({
-        "license": 
+        "license": 'GJ06JE8181'
     });
 
     var xhr = new XMLHttpRequest();
